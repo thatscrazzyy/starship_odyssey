@@ -20,7 +20,9 @@ public class SpaceGame extends JPanel implements ActionListener, KeyListener {
     private final int ASTEROID_WIDTH = 40, ASTEROID_HEIGHT = 40;
     private final int SPACESHIP_WIDTH = 40, SPACESHIP_HEIGHT = 40;
     private int score = 0;
-    
+    private Image spaceshipImage;
+    private Image asteroidImage;
+
     public SpaceGame() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(Color.BLACK);
@@ -31,6 +33,8 @@ public class SpaceGame extends JPanel implements ActionListener, KeyListener {
         addAsteroid(true);
         addAsteroid(true);
         timer.start();
+        spaceshipImage = new ImageIcon("spaceship.png").getImage();
+        asteroidImage = new ImageIcon("asteroid.png").getImage();
     }
 
     private void addAsteroid(boolean start) {
@@ -39,7 +43,7 @@ public class SpaceGame extends JPanel implements ActionListener, KeyListener {
         int height = ASTEROID_HEIGHT;
         if (start) {
             asteroids.add(new Rectangle(WIDTH + width + asteroids.size() * 300, positionY, width, height));
-            
+
         } else {
             asteroids.add(new Rectangle(asteroids.get(asteroids.size() - 1).x + 600, positionY, width, height));
             score++;
@@ -49,12 +53,11 @@ public class SpaceGame extends JPanel implements ActionListener, KeyListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.RED);
-        g.fillRect(spaceshipX, spaceshipY, SPACESHIP_WIDTH, SPACESHIP_HEIGHT);
-        
+        g.drawImage(spaceshipImage, spaceshipX, spaceshipY, this);
+
         g.setColor(Color.GRAY);
         for (Rectangle asteroid : asteroids) {
-            g.fillRect(asteroid.x, asteroid.y, asteroid.width, asteroid.height);
+            g.drawImage(asteroidImage, asteroid.x, asteroid.y, this);
             g.setColor(Color.WHITE); // Set the color to white for the score text
             g.setFont(new Font("Arial", Font.BOLD, 18)); // Set the font for the score text
             g.drawString("Score: " + score, 10, 20); // Draw the score at the top-left
@@ -99,7 +102,8 @@ public class SpaceGame extends JPanel implements ActionListener, KeyListener {
         spaceshipVel = 0;
     }
 
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+    }
 
     private void gameOver() {
         timer.stop();
