@@ -22,6 +22,7 @@ public class SpaceGame extends JPanel implements ActionListener, KeyListener {
     private int score = 0;
     private Image spaceshipImage;
     private Image asteroidImage;
+    private int spaceshipVelX = 0;
 
     public SpaceGame() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -76,6 +77,7 @@ public class SpaceGame extends JPanel implements ActionListener, KeyListener {
         }
 
         spaceshipY += spaceshipVel;
+        spaceshipX += spaceshipVelX;
 
         if (spaceshipY < 0 || spaceshipY > HEIGHT - SPACESHIP_HEIGHT) {
             gameOver();
@@ -90,19 +92,26 @@ public class SpaceGame extends JPanel implements ActionListener, KeyListener {
         repaint();
     }
 
+    @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_UP) {
-            spaceshipVel = -10;
+            spaceshipVel = -20; // move up
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            spaceshipVel = 10;
+            spaceshipVel = 20; // move down
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            spaceshipVelX = -20; // move left
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            spaceshipVelX = 20; // move right
         }
     }
 
+    @Override
     public void keyReleased(KeyEvent e) {
-        spaceshipVel = 0;
-    }
-
-    public void keyTyped(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN) {
+            spaceshipVel = 0; // stop vertical movement
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            spaceshipVelX = 0; // stop horizontal movement
+        }
     }
 
     private void gameOver() {
