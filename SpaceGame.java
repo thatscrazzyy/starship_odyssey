@@ -99,7 +99,7 @@ public class SpaceGame extends JPanel implements ActionListener, KeyListener {
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             spaceshipVel = 20; // move down
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            spaceshipVelX = -20; // move left
+            spaceshipVelX = -30; // move left
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             spaceshipVelX = 20; // move right
         }
